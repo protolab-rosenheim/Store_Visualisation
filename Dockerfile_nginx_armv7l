@@ -1,0 +1,22 @@
+FROM arm32v7/node:9 as builder
+
+RUN npm install -g cordova ionic
+
+WORKDIR /opt/app
+
+# use changes to package.json to force Docker not to use the cache
+# when we change our application's nodejs dependencies:
+COPY package.json /opt/app/package.json
+RUN npm install
+
+# From here we load our application's code in, therefore the previous docker
+# "layer" thats been cached will be used if possible
+COPY . /opt/app
+
+RUN ionic cordova build browser --prod --release
+
+# Build nginx webserver and copy thw www folder from "builder" container
+FROM arm32v7/nginx
+
+COPY ./nginx/default.conf /etc/nginx/conf.d/
+COPY --from=builder /opt/app/platforms/browser/www /usr/share/nginx/html

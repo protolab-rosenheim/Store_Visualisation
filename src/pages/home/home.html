@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-buttons left *ngIf="!showSearchbar">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title *ngIf="!showSearchbar">
+      Bestand prüfen
+    </ion-title>
+
+    <ion-buttons end *ngIf="!showSearchbar">
+      <button ion-button icon-only (click)="toggleSearchbar($event)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-searchbar #searchBar *ngIf="showSearchbar" (ionInput)="search($event)" (ionCancel)="toggleSearchbar()" placeholder="Suche"
+      showCancelButton="true" cancelButtonText="Abbrechen"></ion-searchbar>
+  </ion-navbar>
+
+
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="headline">
+      <ion-col col-3>
+        Material
+      </ion-col>
+      <ion-col class="hidden-xs-down">
+        Anzahl
+      </ion-col>
+      <ion-col>
+        Verfügbar
+      </ion-col>
+      <ion-col col-3>
+        Maße [mm]
+      </ion-col>
+      <ion-col class="hidden-sm-down">
+        Lager
+      </ion-col>
+      <ion-col>
+        Bestellung
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let board of shownBoards; let i = index" [ngClass]="{'gray-background': i % 2 == 0 }">
+      <ion-col col-3>
+        {{board.Material}}
+      </ion-col>
+      <ion-col class="hidden-xs-down">
+        {{board.BestandPhys}}
+      </ion-col>
+      <ion-col>
+        {{board.BestandPhys - board.Geplant}}
+      </ion-col>
+      <ion-col col-3>
+        {{board.Laenge/10 | number:'.1-1':'de' }}x{{board.Breite/10 | number:'.1-1':'de'}}x{{board.Dicke/10 | number:'.1-1':'de'}}
+      </ion-col>
+      <ion-col class="hidden-sm-down">
+        PL
+      </ion-col>
+      <ion-col>
+        <button ion-button small (click)="goToOrder(board)">Bestellen</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <button ion-button (click)="goToOrder()">Anderes Material bestellen</button>
+
+</ion-content>

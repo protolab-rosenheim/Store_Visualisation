@@ -1,0 +1,47 @@
+<!--
+  Generated template for the OrderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Bestellung aufgeben</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="order()">
+    <ion-item>
+      <ion-label color="primary" stacked>Materialbezeichung</ion-label>
+      <ion-input required type="text" formControlName="material" placeholder="P2_MFB_19.0_Weiß"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Länge [mm]</ion-label>
+      <ion-input required type="number" formControlName="length" placeholder="2800"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Breite [mm]</ion-label>
+      <ion-input required type="number" formControlName="width" placeholder="2070"></ion-input>
+    </ion-item>
+    <!--<ion-item class="no-line error" *ngIf="!form.controls.board.valid  && (form.controls.board.dirty || submitAttempt) && !form.controls.board.pending">
+        <p *ngIf="form.value.board == ''">Plattenbezeichung ist ein Pflichtfeld</p>
+    </ion-item>-->
+    <ion-item>
+      <ion-label color="primary" stacked>Menge</ion-label>
+      <ion-input required formControlName="count" type="number" placeholder="1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Kostenstelle</ion-label>
+      <ion-input formControlName="costunit"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Weitere Informationen (z.B. Bestelllink)</ion-label>
+      <ion-textarea formControlName="additionalInfo"></ion-textarea>
+    </ion-item>
+    <button ion-button type="submit">Email senden</button>
+  </form>
+</ion-content>
